@@ -3,7 +3,9 @@
 > [!WARNING]
 > This plugin was developed with AI, but is always function-tested by me before anything goes out.
 
-G-code syntax highlighting and documentation for Neovim with support for Tormach machines.
+Semantic G-code syntax highlighting, inline documentation, and editing tools for Neovim. Built for LinuxCNC and Tormach machines. Colors are chosen by meaning and importance — rapid traverses look different from cutting moves, coolant on looks different from coolant off, program stops are immediately obvious.
+
+![Example highlighting](example_highlighting.png)
 
 ## Installation
 
@@ -67,19 +69,35 @@ G-code files are highlighted with semantic coloring by category:
 
 #### Syntax Colors
 
-| Element | Color | Example |
+Brightness and boldness scales with importance — the more dangerous or critical an operation, the more it stands out.
+
+| Element | Style | Example |
 |---------|-------|---------|
-| G-codes | Cyan | `G0`, `G1`, `G81` |
-| M-codes | Orange | `M3`, `M6`, `M30` |
-| Subroutines | Yellow | `O100`, `sub`, `call` |
-| Tooling (T, H) | Orange | `T2`, `H2` |
-| Spindle (S) | Red | `S7000` |
-| Feed (F) | Magenta | `F100` |
-| Axis letters | Purple | `X`, `Y`, `Z` |
-| Numbers | Dim gray | `1.5`, `-2.3`, `1000` |
-| Comments | Gray | `; comment`, `(comment)` |
-| Parameters | Cyan | `#1`, `#711=` |
-| Functions | Cyan | `ABS[...]`, `SIN[...]` |
+| G0 rapid traverse | Bright yellow bold | `G0`, `G00` |
+| G1/G2/G3 cutting | Bright cyan bold | `G1`, `G02`, `G3` |
+| G4/G9 dwell | Muted steel blue | `G4 P1` |
+| G17-G21 plane/units | Dim slate | `G20`, `G21` |
+| G40-G42 cutter comp | Warm amber | `G41`, `G42` |
+| G43-G49 tool length | Golden yellow | `G43 H1` |
+| G54-G59 WCS select | Vivid violet bold | `G54`, `G55`, `G54.1 P10` |
+| G80-G89 canned cycles | Bright orange bold | `G81`, `G83` |
+| G31-G38 probing | Bright yellow bold | `G31` |
+| M0/M1/M2/M30 stop | Hot red bold | `M0`, `M30` |
+| M3/M4/M5 spindle | Bright coral bold | `M3`, `M4`, `M5` |
+| M6 tool change | Vivid orange bold | `M6` |
+| M7/M8 coolant on | Neon blue bold | `M7`, `M8` |
+| M9 coolant off | Dim blue | `M9` |
+| Spindle speed (S) | Red bold | `S15000` |
+| Feed rate (F) | Magenta bold | `F250` |
+| Tooling (T, H) | Orange bold | `T2`, `H1` |
+| X/Y axes | Dull purple | `X1.5`, `Y-3.2` |
+| Z axis | Dull red | `Z-6.0` |
+| I/J/K arc offsets | Green | `I0`, `J3.3` |
+| Comments | Dim gray | `; comment`, `(comment)` |
+| DEBUG comments | Keyword red bold, message yellow | `(DEBUG, message)` |
+| Parameters | Cyan bold | `#1`, `#<named>` |
+| Functions | Cyan | `ABS[x]`, `SIN[x]` |
+| Program marker | Muted olive | `%` |
 
 ### Hover Documentation (`K`)
 
@@ -101,6 +119,7 @@ Jump between subroutines and matching control flow keywords:
 
 | Key | Action |
 |-----|--------|
+| `gd` | Go to subroutine definition (`o<name> call` → `o<name> sub`) |
 | `%` | Jump to matching keyword (`sub`/`endsub`, `if`/`endif`) |
 | `[o` | Jump to previous `sub` or `endsub` |
 | `]o` | Jump to next `sub` or `endsub` |
