@@ -15,13 +15,14 @@ syntax match gcodeDebugKeyword /DEBUG/ contained display
 syntax match gcodeDebugText /,\s*\zs[^)]*/  contained display
 syntax region gcodeDebugStmt start=/(\s*DEBUG/ end=/)\|$/ transparent contains=gcodeDebugKeyword,gcodeDebugText display
 syntax match gcodeParenComment /([^)]*)/ contains=gcodeDebugStmt display
-syntax match gcodeProgramMarker /^%$/ display
-
 " ============================================================
 " ERRORS
 " ============================================================
 
 syntax match gcodeErr /^\s*[^%;GMT(]\S.*$/ display
+
+" Program marker - defined after gcodeErr so it takes priority at same position
+syntax match gcodeProgramMarker /^\s*%.*$/ display
 
 " ============================================================
 " O-WORD SUBROUTINES - region with contained parts
