@@ -75,10 +75,16 @@ syntax match gcodeGMotion /G0*[1-3]\(\.\d\+\)\?/ display
 syntax match gcodeGDwell /G0*[49]\(\.\d\+\)\?/ display
 
 " ============================================================
+" G-CODES - WCS select (G54-G59, G54.1)
+" ============================================================
+
+syntax match gcodeGWCS /G0*5[4-9]\(\.\d\+\)\?\|G0*54\.1\(\s\+P\d\+\)\?/ display
+
+" ============================================================
 " G-CODES - Coordinate systems / Setup (purple)
 " ============================================================
 
-syntax match gcodeGCoord /G0*10\|G0*2[89]\(\.\d\+\)\?\|G0*3[0-9]\(\.\d\+\)\?\|G0*5[23]\|G0*9[2-9]\(\.\d\+\)\?\|G110\|G111\|G112\|G113\|G114\|G115\|G116\|G117\|G118\|G119\|G12[0-9]\|G13[0-9]\|G14[0-9]\|G15[0-4]\|G54[01]\.\d\?/ display
+syntax match gcodeGCoord /G0*10\|G0*2[89]\(\.\d\+\)\?\|G0*3[0-9]\(\.\d\+\)\?\|G0*5[23]\|G0*9[2-9]\(\.\d\+\)\?\|G110\|G11[1-9]\|G12[0-9]\|G13[0-9]\|G14[0-9]\|G15[0-4]/ display
 
 " ============================================================
 " G-CODES - Plane select / Units (brown)
@@ -266,7 +272,9 @@ hi def gcodeGRapid guifg=#E5C07B gui=bold
 hi def gcodeGMotion guifg=#56B6C2 gui=bold
 " G4/G9: dwell/exact stop - muted steel blue (pausing, calm)
 hi def gcodeGDwell guifg=#6A8FAF gui=none
-" G10/G28/G54 etc: coordinate systems/WCS - soft violet (setup, important but not alarming)
+" G54-G59/G54.1: WCS select - vivid violet bold (which fixture? critical to know)
+hi def gcodeGWCS guifg=#C678DD gui=bold
+" G10/G28/G30 etc: coordinate system setup - soft violet (setup commands, less frequent)
 hi def gcodeGCoord guifg=#9B7EC8 gui=none
 " G17/G18/G19/G20/G21: plane select/units - dim slate (background modal state)
 hi def gcodeGPlane guifg=#7A8A9A gui=none
