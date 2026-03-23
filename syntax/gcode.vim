@@ -11,8 +11,10 @@ syntax case match
 " ============================================================
 
 syntax match gcodeLineComment /;.*$/ display
-syntax region gcodeParenComment start=/(/ end=/)/ contains=gcodeDebugComment display
-syntax match gcodeDebugComment /(DEBUG,[^)]*)/ contained display
+syntax match gcodeOpenParen /(/ display
+syntax match gcodeDebugKeyword /DEBUG/ contained display
+syntax match gcodeDebugText /,\s*[^)]*/ contained display
+syntax region gcodeParenComment start=/(/ end=/)/ contains=gcodeDebugKeyword,gcodeDebugText display
 syntax match gcodeProgramMarker /^%$/ display
 
 " ============================================================
@@ -218,7 +220,9 @@ syntax match gcodeExec /[;]@execute\|[;]@pause\|[;]@info\|[;]@sound\|[;]@isathom
 " Comments: dim gray
 hi def gcodeLineComment guifg=#5C6370 gui=none
 hi def gcodeParenComment guifg=#5C6370 gui=none
-hi def gcodeDebugComment guifg=#5C6370 gui=none
+hi def gcodeOpenParen guifg=#5C6370 gui=none
+hi def gcodeDebugKeyword guifg=#E06C75 gui=bold
+hi def gcodeDebugText guifg=#E5C07B gui=none
 hi def gcodeProgramMarker guifg=#E06C75 gui=bold
 hi def gcodeErr guifg=#E06C75 guibg=#3E4451 gui=bold
 
