@@ -60,49 +60,49 @@ syntax keyword gcodeOperator EQ NE LT GT LE GE AND OR XOR DOT contained display
 " G-CODES - Motion (green)
 " ============================================================
 
-syntax match gcodeGMotion /G[0-3]\(\.\d\+\)\?/ display
+syntax match gcodeGMotion /G0*[0-3]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Dwell/Exact stop (cyan)
 " ============================================================
 
-syntax match gcodeGDwell /G[49]\(\.\d\+\)\?/ display
+syntax match gcodeGDwell /G0*[49]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Coordinate systems / Setup (purple)
 " ============================================================
 
-syntax match gcodeGCoord /G10\|G2[89]\(\.\d\+\)\?\|G3[0-9]\(\.\d\+\)\?\|G5[23]\|G9[2-9]\(\.\d\+\)\?\|G110\|G111\|G112\|G113\|G114\|G115\|G116\|G117\|G118\|G119\|G12[0-9]\|G13[0-9]\|G14[0-9]\|G15[0-4]\|G54[01]\.\d\?/ display
+syntax match gcodeGCoord /G0*10\|G0*2[89]\(\.\d\+\)\?\|G0*3[0-9]\(\.\d\+\)\?\|G0*5[23]\|G0*9[2-9]\(\.\d\+\)\?\|G110\|G111\|G112\|G113\|G114\|G115\|G116\|G117\|G118\|G119\|G12[0-9]\|G13[0-9]\|G14[0-9]\|G15[0-4]\|G54[01]\.\d\?/ display
 
 " ============================================================
 " G-CODES - Plane select / Units (brown)
 " ============================================================
 
-syntax match gcodeGPlane /G1[789]\(\.\d\+\)\?\|G2[01]\(\.\d\+\)\?/ display
+syntax match gcodeGPlane /G0*1[789]\(\.\d\+\)\?\|G0*2[01]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Cutter comp (yellow)
 " ============================================================
 
-syntax match gcodeGCutter /G4[0-3]\(\.\d\+\)\?/ display
+syntax match gcodeGCutter /G0*4[0-3]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Tool length (magenta)
 " ============================================================
 
-syntax match gcodeGTool /G4[3-9]\(\.\d\+\)\?/ display
+syntax match gcodeGTool /G0*4[3-9]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Modal motion / Feed mode (red)
 " ============================================================
 
-syntax match gcodeGModal /G6[1-9]\|G9[0-9]\(\.\d\+\)\?/ display
+syntax match gcodeGModal /G0*6[1-9]\|G0*9[0-9]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Canned cycles (orange)
 " ============================================================
 
-syntax match gcodeGCycle /G8[0-9]\(\.\d\+\)\?/ display
+syntax match gcodeGCycle /G0*8[0-9]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Spline / NURBS (light green)
@@ -114,55 +114,55 @@ syntax match gcodeGSpline /G5[.][1-3]/ display
 " G-CODES - Lathe mode (light blue)
 " ============================================================
 
-syntax match gcodeGLathe /G[78]\(\.\d\+\)\?/ display
+syntax match gcodeGLathe /G0*[78]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Probe (light yellow)
 " ============================================================
 
-syntax match gcodeGProbe /G3[1-9]\(\.\d\+\)\?/ display
+syntax match gcodeGProbe /G0*3[1-9]\(\.\d\+\)\?/ display
 
 " ============================================================
 " M-CODES - Program flow (blue)
 " ============================================================
 
-syntax match gcodeMFlow /M30\|M[0-2]\(\.\d\+\)\?\(\D\|$\)/ display
+syntax match gcodeMFlow /M0*30\|M0*[0-2]\(\.\d\+\)\?\(\D\|$\)/ display
 
 " ============================================================
 " M-CODES - Spindle (bright blue)
 " ============================================================
 
-syntax match gcodeMSpindle /M[3-5]\(\.\d\+\)\?\(\D\|$\)/ display
+syntax match gcodeMSpindle /M0*[3-5]\(\.\d\+\)\?\(\D\|$\)/ display
 
 " ============================================================
 " M-CODES - Coolant (teal)
 " ============================================================
 
-syntax match gcodeMCoolant /M[789]\(\.\d\+\)\?/ display
+syntax match gcodeMCoolant /M0*[789]\(\.\d\+\)\?/ display
 
 " ============================================================
 " M-CODES - Tool change (orange)
 " ============================================================
 
-syntax match gcodeMTool /M6\|M61/ display
+syntax match gcodeMTool /M0*6\|M0*61/ display
 
 " ============================================================
 " M-CODES - Spindle special (pink)
 " ============================================================
 
-syntax match gcodeMSpindleSpec /M19\|M29/ display
+syntax match gcodeMSpindleSpec /M0*19\|M0*29/ display
 
 " ============================================================
 " M-CODES - I/O control (brown)
 " ============================================================
 
-syntax match gcodeMIO /M10\|M11\|M4[89]\|M5[0-2]\|M6[4-6]/ display
+syntax match gcodeMIO /M0*10\|M0*11\|M0*4[89]\|M0*5[0-2]\|M0*6[4-6]/ display
 
 " ============================================================
 " M-CODES - Subprograms (yellow)
 " ============================================================
 
-syntax match gcodeMSub /M9[789]/ display
+syntax match gcodeMSub /M0*9[789]/ display
 
 " ============================================================
 " M-CODES - User macros (white)

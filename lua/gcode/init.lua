@@ -1325,15 +1325,24 @@ M100-M199 are user-defined. External file accepts parameters.
   ["M200-M299"] = "Extended user-defined macros.",
 }
 
+-- Strip leading zeros from G/M codes: "M03" -> "M3", "G001" -> "G1"
+local function canonical(word)
+  return word:gsub("^([GgMm])0+(%d)", "%1%2")
+end
+
 function gcode.lookup(word)
-  local doc = gcode.docs[word]
+  -- Normalize: uppercase + strip leading zeros on G/M codes
+  local norm = canonical(word:upper())
+
+  local doc = gcode.docs[norm]
   if doc then
-    return "**" .. word .. "**\n\n" .. doc
+    return "**" .. norm .. "**\n\n" .. doc
   end
 
+  -- Fallback: original word as-is (handles non-G/M keys)
   local upper = word:upper()
-  if word ~= upper and gcode.docs[upper] then
-    return "**" .. word .. "**\n\n" .. gcode.docs[upper]
+  if upper ~= norm and gcode.docs[upper] then
+    return "**" .. upper .. "**\n\n" .. gcode.docs[upper]
   end
 
   if word:match("^G1[12]%d$") then
@@ -1433,7 +1442,7 @@ function gcode.hover()
   if result == "" then
     local partial = word:match("^[gmGMCc]%d+%.?%d*")
     if partial then
-      result = gcode.lookup(partial:upper())
+      result = gcode.lookup(canonical(partial:upper()))
     end
   end
 
