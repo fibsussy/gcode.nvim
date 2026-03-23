@@ -243,7 +243,7 @@ hi def gcodeDebugStmt guifg=NONE gui=NONE
 hi def gcodeDebugKeyword guifg=#E06C75 gui=bold
 hi def gcodeDebugComma guifg=#5C6370 gui=none
 hi def gcodeDebugText guifg=#E5C07B gui=none
-hi def gcodeProgramMarker guifg=#E06C75 gui=bold
+hi def gcodeProgramMarker guifg=#7A8A6A gui=none
 hi def gcodeErr guifg=#E06C75 guibg=#3E4451 gui=bold
 
 " Subroutines: o<> and name same color (yellow), sub green
