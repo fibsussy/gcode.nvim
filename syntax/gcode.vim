@@ -11,17 +11,17 @@ syntax case ignore
 " ============================================================
 
 syntax match gcodeLineComment /;.*$/ display
-syntax match gcodeOpenParen /(/ display
 syntax match gcodeDebugKeyword /DEBUG/ contained display
-syntax match gcodeDebugText /,\s*[^)]*/ contained display
-syntax region gcodeParenComment start=/(/ end=/)/ contains=gcodeDebugKeyword,gcodeDebugText display
+syntax match gcodeDebugText /,\s*\zs[^)]*/  contained display
+syntax region gcodeDebugStmt start=/(\s*DEBUG/ end=/)\|$/ transparent contains=gcodeDebugKeyword,gcodeDebugText display
+syntax match gcodeParenComment /([^)]*)/ contains=gcodeDebugStmt display
 syntax match gcodeProgramMarker /^%$/ display
 
 " ============================================================
 " ERRORS
 " ============================================================
 
-syntax match gcodeErr /^\s*[^%;GMT]\S.*$/ display
+syntax match gcodeErr /^\s*[^%;GMT(]\S.*$/ display
 
 " ============================================================
 " O-WORD SUBROUTINES - region with contained parts
@@ -48,7 +48,7 @@ syntax match gcodeNamedBrace2 />/ contained display
 " ============================================================
 
 syntax keyword gcodeFunction ABS ACOS ASIN ATAN COS EXISTS EXP FIX FUP LN ROUND SIN SQRT TAN contained display
-syntax region gcodeFuncArg start=/\[/ end=/\]/ contained display
+syntax region gcodeFuncArg start=/\[/ end=/\]\|$/ contained display
 
 " ============================================================
 " OPERATORS
@@ -207,6 +207,11 @@ syntax match gcodeAxisA /A-*\d\+\(\.\d*\)\?/ display
 syntax match gcodeAxisB /B-*\d\+\(\.\d*\)\?/ display
 syntax match gcodeAxisC /C-*\d\+\(\.\d*\)\?/ display
 
+" Arc IJK offsets
+syntax match gcodeAxisI /I-*\d\+\(\.\d*\)\?/ display
+syntax match gcodeAxisJ /J-*\d\+\(\.\d*\)\?/ display
+syntax match gcodeAxisK /K-*\d\+\(\.\d*\)\?/ display
+
 " ============================================================
 " SPECIAL PATTERNS
 " ============================================================
@@ -220,8 +225,9 @@ syntax match gcodeExec /[;]@execute\|[;]@pause\|[;]@info\|[;]@sound\|[;]@isathom
 " Comments: dim gray
 hi def gcodeLineComment guifg=#5C6370 gui=none
 hi def gcodeParenComment guifg=#5C6370 gui=none
-hi def gcodeOpenParen guifg=#5C6370 gui=none
+hi def gcodeDebugStmt guifg=NONE gui=NONE
 hi def gcodeDebugKeyword guifg=#E06C75 gui=bold
+hi def gcodeDebugComma guifg=#5C6370 gui=none
 hi def gcodeDebugText guifg=#E5C07B gui=none
 hi def gcodeProgramMarker guifg=#E06C75 gui=bold
 hi def gcodeErr guifg=#E06C75 guibg=#3E4451 gui=bold
@@ -294,6 +300,9 @@ hi def gcodeAxisW guifg=#A67DB8 gui=none
 hi def gcodeAxisA guifg=#A67DB8 gui=none
 hi def gcodeAxisB guifg=#A67DB8 gui=none
 hi def gcodeAxisC guifg=#A67DB8 gui=none
+hi def gcodeAxisI guifg=#98C379 gui=none
+hi def gcodeAxisJ guifg=#98C379 gui=none
+hi def gcodeAxisK guifg=#98C379 gui=none
 
 hi def gcodeExec guifg=#61AFEF gui=none
 
