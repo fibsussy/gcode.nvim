@@ -23,6 +23,11 @@ That's it. The plugin auto-detects G-code files and sets up keybindings automati
 |-----------|-------------|
 | `.nc` | Standard G-code |
 | `.ngc` | LinuxCNC G-code |
+| `.gcode` | Generic G-code |
+| `.gc` | G-code (simplified) |
+| `.gco` | G-code output |
+| `.tap` | Tape file format |
+| `.ncc` | CNC G-code |
 
 ## Features
 
