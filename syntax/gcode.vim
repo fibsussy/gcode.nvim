@@ -4,7 +4,7 @@ endif
 
 let b:current_syntax = "gcode"
 
-syntax case match
+syntax case ignore
 
 " ============================================================
 " COMMENTS
