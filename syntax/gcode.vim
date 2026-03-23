@@ -79,7 +79,7 @@ syntax match gcodeGDwell /G0*[49]\(\.\d\+\)\?/ display
 " G-CODES - WCS select (G54-G59, G54.1)
 " ============================================================
 
-syntax match gcodeGWCS /G0*5[4-9]\(\.\d\+\)\?\|G0*54\.1\(\s\+P\d\+\)\?/ display
+syntax match gcodeGWCS /G0*54\.1\s\+P\d\+\|G0*5[4-9]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Coordinate systems / Setup (purple)
