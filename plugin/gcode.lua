@@ -20,6 +20,10 @@ local function setup_gcode()
   vim.keymap.set({ "n", "x" }, "%", function()
     gcode.jump_to_percent()
   end, { buffer = true, desc = "Jump matching (extends % for G-code)" })
+
+  vim.keymap.set("n", "gd", function()
+    gcode.goto_def()
+  end, { buffer = true, desc = "Go to subroutine definition" })
 end
 
 if vim.bo.filetype == "gcode" then

@@ -344,4 +344,3 @@ hi def gcodeAxisK guifg=#98C379 gui=none
 hi def gcodeExec guifg=#61AFEF gui=none
 
 let b:current_syntax = "gcode"
-let b:commentstring = "; %s"

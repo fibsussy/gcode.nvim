@@ -1688,4 +1688,37 @@ function gcode.jump_to_percent()
   vim.cmd("normal! %")
 end
 
+function gcode.goto_def()
+  local line = vim.fn.getline(".")
+  local line_lower = line:lower()
+
+  -- Extract subroutine name from current line (o<name> or o123)
+  local sub_name = line:match("[oO]<([^>]+)>") or line:match("[oO](%d+)")
+  if not sub_name then
+    vim.notify("No subroutine reference on this line", vim.log.levels.WARN)
+    return
+  end
+
+  -- If we're already on the sub definition, do nothing
+  if line_lower:match("o%s*<?" .. vim.pesc(sub_name:lower()) .. ">?%s+sub%f[%s%c]") then
+    return
+  end
+
+  -- Search entire buffer for o<name> sub or o123 sub
+  local name_lower = sub_name:lower()
+  for i = 1, vim.fn.line("$") do
+    local l = vim.fn.getline(i):lower()
+    -- match o<name> sub or o123 sub
+    local found = l:match("o<" .. vim.pesc(name_lower) .. ">%s+sub%f[%s%c]")
+      or l:match("o" .. vim.pesc(name_lower) .. "%s+sub%f[%s%c]")
+    if found then
+      vim.fn.cursor(i, 1)
+      vim.cmd("normal! zv")
+      return
+    end
+  end
+
+  vim.notify("Definition not found: " .. sub_name, vim.log.levels.WARN)
+end
+
 return gcode
