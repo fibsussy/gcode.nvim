@@ -23,7 +23,6 @@ That's it. The plugin auto-detects G-code files and sets up keybindings automati
 |-----------|-------------|
 | `.nc` | Standard G-code |
 | `.ngc` | LinuxCNC G-code |
-| `.torm`, `.tormach` | Tormach G-code |
 
 ## Features
 

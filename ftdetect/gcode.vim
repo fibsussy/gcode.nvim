@@ -1,1 +1,1 @@
-au BufRead,BufNewFile *.nc,*.ngc,*.torm,*.tormach set filetype=gcode
+au BufRead,BufNewFile *.nc,*.ngc set filetype=gcode
