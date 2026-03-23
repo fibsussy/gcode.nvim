@@ -57,10 +57,16 @@ syntax region gcodeFuncArg start=/\[/ end=/\]\|$/ contained display
 syntax keyword gcodeOperator EQ NE LT GT LE GE AND OR XOR DOT contained display
 
 " ============================================================
-" G-CODES - Motion (green)
+" G-CODES - Rapid traverse (G0)
 " ============================================================
 
-syntax match gcodeGMotion /G0*[0-3]\(\.\d\+\)\?/ display
+syntax match gcodeGRapid /G0*0\(\.\d\+\)\?/ display
+
+" ============================================================
+" G-CODES - Cutting motion (G1/G2/G3)
+" ============================================================
+
+syntax match gcodeGMotion /G0*[1-3]\(\.\d\+\)\?/ display
 
 " ============================================================
 " G-CODES - Dwell/Exact stop (cyan)
@@ -138,7 +144,8 @@ syntax match gcodeMSpindle /M0*[3-5]\(\.\d\+\)\?\(\D\|$\)/ display
 " M-CODES - Coolant (teal)
 " ============================================================
 
-syntax match gcodeMCoolant /M0*[789]\(\.\d\+\)\?/ display
+syntax match gcodeMCoolantOn /M0*[78]\(\.\d\+\)\?/ display
+syntax match gcodeMCoolantOff /M0*9\(\.\d\+\)\?/ display
 
 " ============================================================
 " M-CODES - Tool change (orange)
@@ -253,7 +260,9 @@ hi def gcodeFunction guifg=#61AFEF gui=none
 hi def gcodeFuncArg guifg=#ABB2BF gui=none
 hi def gcodeOperator guifg=#ABB2BF gui=none
 
-" G0: rapid traverse - bright cyan, bold (fast movement, pay attention)
+" G0: rapid traverse - bright yellow, bold (fast non-cutting move, stands out from cutting)
+hi def gcodeGRapid guifg=#E5C07B gui=bold
+" G1/G2/G3: cutting motion - bright cyan, bold (the actual work)
 hi def gcodeGMotion guifg=#56B6C2 gui=bold
 " G4/G9: dwell/exact stop - muted steel blue (pausing, calm)
 hi def gcodeGDwell guifg=#6A8FAF gui=none
@@ -280,8 +289,10 @@ hi def gcodeGProbe guifg=#E5C07B gui=bold
 hi def gcodeMFlow guifg=#E06C75 gui=bold
 " M3/M4/M5: spindle on/off/reverse - bright coral, bold (spinning metal, dangerous)
 hi def gcodeMSpindle guifg=#FF8059 gui=bold
-" M7/M8/M9: coolant - bright teal (fluid control, distinct and visible)
-hi def gcodeMCoolant guifg=#2BBAC5 gui=none
+" M7/M8: coolant on - neon blue (active, fluid flowing)
+hi def gcodeMCoolantOn guifg=#00D4FF gui=bold
+" M9: coolant off - dim blue (off, quieted)
+hi def gcodeMCoolantOff guifg=#3A6A7A gui=none
 " M6/M61: tool change - vivid orange, bold (critical: machine changes tool)
 hi def gcodeMTool guifg=#FF9F43 gui=bold
 " M19/M29: spindle orient/rigid tap - muted salmon (spindle special state)
