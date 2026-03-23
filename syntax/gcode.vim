@@ -253,28 +253,45 @@ hi def gcodeFunction guifg=#61AFEF gui=none
 hi def gcodeFuncArg guifg=#ABB2BF gui=none
 hi def gcodeOperator guifg=#ABB2BF gui=none
 
-" G-codes: DULL ORANGE - pronounced but not attention-grabbing
-hi def gcodeGMotion guifg=#61AFEF gui=none
-hi def gcodeGDwell guifg=#D19A66 gui=none
-hi def gcodeGCoord guifg=#D19A66 gui=none
-hi def gcodeGPlane guifg=#D19A66 gui=none
-hi def gcodeGCutter guifg=#D19A66 gui=none
-hi def gcodeGTool guifg=#D19A66 gui=none
-hi def gcodeGModal guifg=#D19A66 gui=none
-hi def gcodeGCycle guifg=#D19A66 gui=none
-hi def gcodeGSpline guifg=#D19A66 gui=none
-hi def gcodeGLathe guifg=#D19A66 gui=none
-hi def gcodeGProbe guifg=#D19A66 gui=none
+" G0: rapid traverse - bright cyan, bold (fast movement, pay attention)
+hi def gcodeGMotion guifg=#56B6C2 gui=bold
+" G4/G9: dwell/exact stop - muted steel blue (pausing, calm)
+hi def gcodeGDwell guifg=#6A8FAF gui=none
+" G10/G28/G54 etc: coordinate systems/WCS - soft violet (setup, important but not alarming)
+hi def gcodeGCoord guifg=#9B7EC8 gui=none
+" G17/G18/G19/G20/G21: plane select/units - dim slate (background modal state)
+hi def gcodeGPlane guifg=#7A8A9A gui=none
+" G40-G42: cutter comp - warm amber (modifies cutting path, notable)
+hi def gcodeGCutter guifg=#C9945C gui=none
+" G43-G49: tool length offset - golden yellow (tool geometry, pay attention)
+hi def gcodeGTool guifg=#D4A843 gui=none
+" G61-G99: modal/feed mode - muted teal (background motion mode)
+hi def gcodeGModal guifg=#4E9F8E gui=none
+" G80-G89: canned cycles - bright orange, bold (complex canned ops, high importance)
+hi def gcodeGCycle guifg=#E07B39 gui=bold
+" G5.1-G5.3: spline/NURBS - light mint (exotic, rare)
+hi def gcodeGSpline guifg=#7EC8A0 gui=none
+" G7/G8: lathe diameter/radius - soft rose (lathe-specific mode)
+hi def gcodeGLathe guifg=#C47F9A gui=none
+" G31-G38: probing - bright yellow, bold (careful! machine is probing)
+hi def gcodeGProbe guifg=#E5C07B gui=bold
 
-" M-codes: dull orange
-hi def gcodeMFlow guifg=#D19A66 gui=none
-hi def gcodeMSpindle guifg=#D19A66 gui=none
-hi def gcodeMCoolant guifg=#D19A66 gui=none
-hi def gcodeMTool guifg=#D19A66 gui=none
-hi def gcodeMSpindleSpec guifg=#D19A66 gui=none
-hi def gcodeMIO guifg=#D19A66 gui=none
-hi def gcodeMSub guifg=#D19A66 gui=none
-hi def gcodeMUser guifg=#D19A66 gui=none
+" M0/M1/M2/M30: program stop/end - hot red, bold (STOP, most important M-code)
+hi def gcodeMFlow guifg=#E06C75 gui=bold
+" M3/M4/M5: spindle on/off/reverse - bright coral, bold (spinning metal, dangerous)
+hi def gcodeMSpindle guifg=#FF8059 gui=bold
+" M7/M8/M9: coolant - bright teal (fluid control, distinct and visible)
+hi def gcodeMCoolant guifg=#2BBAC5 gui=none
+" M6/M61: tool change - vivid orange, bold (critical: machine changes tool)
+hi def gcodeMTool guifg=#FF9F43 gui=bold
+" M19/M29: spindle orient/rigid tap - muted salmon (spindle special state)
+hi def gcodeMSpindleSpec guifg=#C47A5A gui=none
+" M10/M11/M48-M66: I/O control - dim olive (background I/O, low urgency)
+hi def gcodeMIO guifg=#8A9A5A gui=none
+" M97/M98/M99: subprogram calls - soft cyan (flow control, like function calls)
+hi def gcodeMSub guifg=#56B6C2 gui=none
+" M100+: user macros - dim gray-white (unknown/custom, intentionally subtle)
+hi def gcodeMUser guifg=#8A95A0 gui=none
 
 " Tooling T, H: orange
 hi def gcodeTool guifg=#FF9F43 gui=bold
