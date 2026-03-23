@@ -1,7 +1,7 @@
 # gcode.nvim
 
 > [!WARNING]
-> This plugin was developed with AI, but is always function-tested by me.
+> This plugin was developed with AI, but is always function-tested by me before anything goes out.
 
 G-code syntax highlighting and documentation for Neovim with support for Tormach machines.
 
