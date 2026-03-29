@@ -1,9 +1,14 @@
 local gcode = require("gcode")
 
 local function setup_gcode()
+  gcode.setup_treesitter()
   vim.keymap.set({ "n", "x" }, "K", function()
     gcode.hover()
   end, { buffer = true, desc = "G-code hover documentation" })
+
+  vim.api.nvim_create_user_command("GcodeDebugR", function()
+    gcode.debug_line()
+  end, {})
 
   vim.api.nvim_create_user_command("GcodeMath", function(opts)
     gcode.math(opts, opts.args ~= "" and opts.args or nil)
