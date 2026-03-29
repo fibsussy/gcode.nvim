@@ -28,72 +28,49 @@ end
 -- PARSER AUTO-INSTALL: clone and build from fork
 -- ============================================================
 
-local PARSER_VERSION_FILE = vim.fn.stdpath("data") .. "/lazy/gcode.nvim/gcode_parser_version"
+local PARSER_VERSION  = "v0.6.0"
+local RELEASE_URL     = "https://github.com/fibsussy/tree-sitter-gcode/releases/download/"
+local VERSION_FILE    = vim.fn.stdpath("data") .. "/gcode_parser_version"
 
-local function get_current_version()
-  if vim.fn.filereadable(PARSER_VERSION_FILE) == 1 then
-    return vim.fn.readfile(PARSER_VERSION_FILE)[1]
+local function installed_version()
+  if vim.fn.filereadable(VERSION_FILE) == 1 then
+    return vim.fn.readfile(VERSION_FILE)[1]
   end
   return nil
 end
 
 local function save_version(ver)
-  local dir = vim.fn.fnamemodify(PARSER_VERSION_FILE, ":p:h")
-  vim.fn.mkdir(dir, "p")
-  vim.fn.writefile({ver}, PARSER_VERSION_FILE)
-end
-
-local function install_parser()
-  local data_dir = vim.fn.stdpath("data")
-  local parser_dir = data_dir .. "/site/parser"
-  local parser_path = parser_dir .. "/gcode.so"
-
-  -- Use nvim-treesitter prebuilt parser
-  local pack_parser = data_dir .. "/site/parser/libtree-sitter-gcode.so"
-  if vim.fn.filereadable(pack_parser) == 1 then
-    vim.fn.mkdir(parser_dir, "p")
-    vim.fn.system("cp " .. pack_parser .. " " .. parser_path)
-    return true
-  end
-
-  return false
+  vim.fn.writefile({ ver }, VERSION_FILE)
 end
 
 local function ensure_parser_and_queries()
-  local data_dir = vim.fn.stdpath("data")
-  local parser_dir = data_dir .. "/site/parser"
+  local data_dir    = vim.fn.stdpath("data")
+  local parser_dir  = data_dir .. "/site/parser"
   local queries_dir = data_dir .. "/site/queries/gcode"
-
   local parser_path = parser_dir .. "/gcode.so"
 
-  -- Try download from fork first
-  if vim.fn.filereadable(parser_path) == 0 then
-    install_parser()
-  end
-
-  -- Fall back to nvim-treesitter prebuilt if fork not available
-  if vim.fn.filereadable(parser_path) == 0 then
-    local pack_parser = data_dir .. "/site/parser/libtree-sitter-gcode.so"
-    if vim.fn.filereadable(pack_parser) == 1 then
-      vim.fn.mkdir(parser_dir, "p")
-      vim.fn.system("cp " .. pack_parser .. " " .. parser_path)
+  -- Download parser if missing or version changed
+  if vim.fn.filereadable(parser_path) == 0 or installed_version() ~= PARSER_VERSION then
+    vim.fn.mkdir(parser_dir, "p")
+    local url = RELEASE_URL .. PARSER_VERSION .. "/gcode.so"
+    local result = vim.fn.system({ "curl", "-fsSL", "-o", parser_path, url })
+    if vim.v.shell_error ~= 0 then
+      vim.notify("gcode.nvim: failed to download parser from " .. url .. "\n" .. result, vim.log.levels.ERROR)
+      return
     end
+    save_version(PARSER_VERSION)
+    vim.notify("gcode.nvim: parser " .. PARSER_VERSION .. " installed", vim.log.levels.INFO)
   end
 
-  -- Find the plugin's queries file - check current directory first
-  local plugin_dir = vim.fn.stdpath("config") .. "/../code/fibsussy/gcode.nvim"
-  if vim.fn.isdirectory(plugin_dir) == 0 then
-    plugin_dir = vim.fn.fnamemodify(debug.getinfo(1).source:sub(2), ":p:h:h")
-  end
+  -- Install queries from plugin directory (always keep up to date)
+  local plugin_dir    = vim.fn.fnamemodify(debug.getinfo(1).source:sub(2), ":p:h:h:h")
   local plugin_queries = plugin_dir .. "/queries/highlights.scm"
   if vim.fn.filereadable(plugin_queries) == 0 then
     plugin_queries = data_dir .. "/lazy/gcode.nvim/queries/highlights.scm"
   end
-
-  local dest_queries = queries_dir .. "/highlights.scm"
   if vim.fn.filereadable(plugin_queries) == 1 then
     vim.fn.mkdir(queries_dir, "p")
-    vim.fn.system("cp " .. plugin_queries .. " " .. dest_queries)
+    vim.fn.system({ "cp", plugin_queries, queries_dir .. "/highlights.scm" })
   end
 end
 
